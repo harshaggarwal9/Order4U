@@ -45,11 +45,7 @@ def authenticate_user(db: Session, email: str, password: str):
 
 def get_current_user(token: Annotated[str, Depends(oauth2_bearer)],db: Annotated[Session, Depends(get_db)]):
     try:
-        payload = jwt.decode(
-            token,
-            settings.SECRET_KEY,
-            algorithms=[settings.ALGORITHM],
-        )
+        payload = jwt.decode(token,settings.SECRET_KEY,algorithms=[settings.ALGORITHM],)
 
         user_id: int | None = payload.get("id")
         if user_id is None:

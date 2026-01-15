@@ -10,15 +10,10 @@ router = APIRouter(prefix="/menu", tags=["Menu"])
 
 
 @router.post("/restaurant/{restaurant_id}", status_code=status.HTTP_201_CREATED)
-def create_menu_item(
-    restaurant_id: int,
-    payload: MenuItemCreate,
-    db: Session = Depends(get_db),
-    user: dict = Depends(get_current_user)
-):
+def create_menu_item(restaurant_id: int,payload: MenuItemCreate,db: Session = Depends(get_db),user: dict = Depends(get_current_user)):
+
     if user.role not in ["admin", "restaurant_owner"]:
         raise HTTPException(status_code=403, detail="Not allowed")
-
 
     menu = menu_items(
         restaurant_id=restaurant_id,
@@ -39,12 +34,8 @@ def get_menu(restaurant_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{menu_id}", status_code=status.HTTP_200_OK)
-def update_menu_item(
-    menu_id: int,
-    payload: MenuItemUpdate,
-    db: Session = Depends(get_db),
-    user: dict = Depends(get_current_user)
-):
+def update_menu_item(menu_id: int,payload: MenuItemUpdate,db: Session = Depends(get_db),user: dict = Depends(get_current_user)):
+    
     if user.role not in ["admin", "restaurant_owner"]:
         raise HTTPException(status_code=403, detail="Not allowed")
 

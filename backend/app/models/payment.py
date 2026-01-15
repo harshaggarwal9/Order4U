@@ -14,7 +14,6 @@ class PaymentMethodEnum(str, enum.Enum):
     CARD = "CARD"
     CASH = "CASH"
 
-
 class Payment(Base):
     __tablename__ = "payments"
 
@@ -22,15 +21,6 @@ class Payment(Base):
     order_id = Column(Integer, ForeignKey("orders.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     amount = Column(Float, nullable=False)
-
-    payment_method = Column(
-        Enum(PaymentMethodEnum, name="payment_method_enum"),
-        nullable=False
-    )
-
-    status = Column(
-        Enum(PaymentStatusEnum, name="payment_status_enum"),
-        default=PaymentStatusEnum.PENDING,
-        nullable=False
-    )
+    payment_method = Column(Enum(PaymentMethodEnum, name="payment_method_enum"),nullable=False)
+    status = Column(Enum(PaymentStatusEnum, name="payment_status_enum"),default=PaymentStatusEnum.PENDING,nullable=False)
 
